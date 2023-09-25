@@ -4,14 +4,15 @@ on:
   push:
     branches:
       - main
-env: 
-  username: ${{ secrets.SuperSecret }}
-  pass: ${{ secrets.DOCKER_PASSWORD }}
-  
+
 jobs:
   docker:
     timeout-minutes: 1
     runs-on: ubuntu-latest
+  
+  env: 
+    username: ${{ secrets.SuperSecret }}
+    pass: ${{ secrets.DOCKER_PASSWORD }}
 
     steps:
     - name: Checkout
