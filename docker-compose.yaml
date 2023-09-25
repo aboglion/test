@@ -2,16 +2,14 @@ version: '3'
 services:
 
   flask_io:
-    # env_file: 
-    #   - .env
+    env_file: 
+      - .env
     # image: ${REGISTRY}y_app:${TAG}
     image: aboglion/test  # if from dockerhub
     # build: # if localy 
     #   context: ./flask_up
     #   dockerfile: Dockerfileflask_up
     restart: always
-    environment:
-      TEST_ENV_PASSASSWORD: nunujijinunu
     ports:
       - "80:5000"
     networks:
