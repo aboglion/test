@@ -7,7 +7,7 @@ on:
 
 env: 
   username: ${{ secrets.DOCKER_USERNAME }}
-  password: ${{ DOCKR_TOKEN }}
+  password: ${{ secrets.DOCKR_TOKEN }}
 
 jobs:
   docker:
