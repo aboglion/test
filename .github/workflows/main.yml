@@ -18,20 +18,18 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Login_DockerHub
-      run: echo "$password" | docker login docker.pkg.github.com -u "$username" --password-stdin
-
-    - name: testps
-      run : docker ps -a
-
     - name: build_container
       run: docker build -t test ./flask_app
 
     - name: tag_it
       run: docker tag test ${username}/test
 
-    - name: push_container
-      run: docker push ${username}/test
+    - name: testps
+      run : docker ps -a
+      
+    - name: Login_bush_DockerHub
+      run: echo "$password" | docker login docker.pkg.github.com -u "$username" --password-stdin && docker push ${username}/test
+
 
     - name: clean_up
       run: docker rmi test
