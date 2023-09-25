@@ -25,7 +25,7 @@ jobs:
       run: docker tag test ${username}/test
 
     - name: testps
-      run : docker images
+      run: docker images
 
     - name: Login_DockerHub
       run: echo "$password" | docker login docker.pkg.github.com -u "$username" --password-stdin 
