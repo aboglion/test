@@ -34,8 +34,7 @@ jobs:
       run: docker push ${{ secrets.DOCKER_USERNAME }}/test
 
     - name: clean up
-      run: docker -rmi test
-      run: docker -rmi ${{ secrets.DOCKER_USERNAME }}/test
+      run: docker -rmi test ${{ secrets.DOCKER_USERNAME }}/test
 
 
         # name: Build and push
