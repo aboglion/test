@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+env: 
+  username: ${{ secrets.SuperSecret }}
+  pass: ${{ secrets.DOCKER_PASSWORD }}
+  
 jobs:
   docker:
     timeout-minutes: 1
@@ -13,28 +17,26 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    # - name: Get directory
-    #   run: ls
-        # name: Login to Docker Hub
-        # uses: docker/login-action@v3
-        # with:
-        #   username: ${{ secrets.DOCKERHUB_USERNAME }}
-        #   password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Login to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login docker.pkg.github.com -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+    - name: Login_DockerHub
+      run: echo "$pass" | docker login docker.pkg.github.com -u "$us" --password-stdin
+      # name: Login to Docker Hub
+      # uses: docker/login-action@v3
+      # with:
+      #   username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #   password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: build container
+    - name: build_container
       run: docker build -t test ./flask_app
 
     - name: tag_it
-      run: docker tag my-image ${{ secrets.DOCKER_USERNAME }}/test
+      run: docker tag my-image $username/test
 
-    - name: push container
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/test
+    - name: push_container
+      run: docker push $username/test
 
-    - name: clean up
-      run: docker -rmi test ${{ secrets.DOCKER_USERNAME }}/test
+    - name: clean_up
+      run: docker -rmi test $username/test
 
 
         # name: Build and push
