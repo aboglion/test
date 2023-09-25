@@ -5,14 +5,14 @@ on:
     branches:
       - main
 
+env: 
+  username: ${{ secrets.SuperSecret }}
+  pass: ${{ secrets.DOCKER_PASSWORD }}
+
 jobs:
   docker:
     timeout-minutes: 1
     runs-on: ubuntu-latest
-  
-  env: 
-    username: ${{ secrets.SuperSecret }}
-    pass: ${{ secrets.DOCKER_PASSWORD }}
 
     steps:
     - name: Checkout
@@ -31,13 +31,13 @@ jobs:
       run: docker build -t test ./flask_app
 
     - name: tag_it
-      run: docker tag my-image $username/test
+      run: docker tag my-image {$username}/test
 
     - name: push_container
-      run: docker push $username/test
+      run: docker push {$username}/test
 
     - name: clean_up
-      run: docker -rmi test $username/test
+      run: docker -rmi test {$username}/test
 
 
         # name: Build and push
