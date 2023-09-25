@@ -1,0 +1,19 @@
+name: Run Docker Compose
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run Docker Compose
+        uses: docker/compose@v2
+        with:
+          compose-file: ./docker-compose.yml
+          context: .
