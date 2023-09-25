@@ -25,13 +25,16 @@ jobs:
       run: docker tag test ${username}/test
 
     - name: testps
-      run : docker ps -a
-      
-    - name: Login_bush_DockerHub
-      run: echo "$password" | docker login docker.pkg.github.com -u "$username" --password-stdin && docker push ${username}/test
+      run : docker images
 
+    - name: Login_DockerHub
+      run: echo "$password" | docker login docker.pkg.github.com -u "$username" --password-stdin 
+    
+    - name: bush_it
+       docker push ${username}/test
 
     - name: clean_up
+      if: always()
       run: docker rmi test
 
 
