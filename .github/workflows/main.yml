@@ -31,7 +31,7 @@ jobs:
       run: echo "$password" | docker login docker.pkg.github.com -u "$username" --password-stdin 
     
     - name: bush_it
-       docker push ${username}/test
+      run: docker push ${username}/test
 
     - name: clean_up
       if: always()
