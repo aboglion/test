@@ -25,10 +25,24 @@ jobs:
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login docker.pkg.github.com -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: build container
-      run: docker-compose -f "docker-compose.yaml" build
+      run: docker build -t test .
+
+    - name: tag_it
+      run: docker tag my-image ${{ secrets.DOCKER_USERNAME }}/test
 
     - name: push container
-      run: docker push
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/test
+
+    - name: clean up
+      run: docker -rmi test
+      run: docker -rmi ${{ secrets.DOCKER_USERNAME }}/test
+
+
+        # name: Build and push
+        # uses: docker/build-push-action@v5
+        # with:
+        #   push: true
+        #   tags: user/app:latest
 
     # - name: Stop containers
     #   if: always()
