@@ -28,7 +28,7 @@ jobs:
       run: docker images
 
     - name: Login_DockerHub
-      uses: docker/login-action@v3
+      uses: docker/login-action@v2
       with:
         username: ${username}
         password: ${password}
