@@ -15,10 +15,21 @@ jobs:
 
     # - name: Get directory
     #   run: ls
+        # name: Login to Docker Hub
+        # uses: docker/login-action@v3
+        # with:
+        #   username: ${{ secrets.DOCKERHUB_USERNAME }}
+        #   password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Start containers
-      run: docker-compose -f "docker-compose.yaml" up -d --build
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login docker.pkg.github.com -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    - name: Stop containers
-      if: always()
-      run: docker-compose -f "docker-compose.yaml" down
+    - name: build container
+      run: docker-compose -f "docker-compose.yaml" build
+
+    - name: push container
+      run: docker push
+
+    # - name: Stop containers
+    #   if: always()
+    #   run: docker-compose -f "docker-compose.yaml" down
