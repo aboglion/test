@@ -6,7 +6,7 @@ on:
       - main
 
 env: 
-  username: ${{ secrets.DOCKER_USERNAME }}
+  username: aboglion
   password: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
@@ -35,7 +35,7 @@ jobs:
 
     - name: clean_up
       if: always()
-      run: docker rmi test
+      run: docker rmi test:latest ${username}/test
 
 
       # name: Login to Docker Hub
