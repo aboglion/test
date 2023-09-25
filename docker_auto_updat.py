@@ -1,8 +1,9 @@
 import requests
 import time
-import os
+import os,sys
 from dotenv import load_dotenv
 import subprocess
+sys.tracebacklimit = -1
 
 load_dotenv()
 username = os.getenv("DOCKERHUB_USERNAME")
@@ -11,7 +12,7 @@ repository_name = "test"
 api_url = f"https://hub.docker.com/v2/repositories/{username}/{repository_name}"
 
 
-def updat_it():
+def updat_it(last_push):
 
     # Define the make up command as a list of strings
     make_up_command = ["make", "update"]
@@ -19,10 +20,14 @@ def updat_it():
     result = subprocess.run(make_up_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if result.returncode == 0:
         print("Make up completed successfully")
+        print(f"Stored Last Push")
+        with open(".last_update", "w") as file:
+            file.write(last_push)
     else:
         print("Make up failed with the following output:")
         print(result.stdout)
         print(result.stderr)
+
 
 
 # Function to get the last push timestamp for the repository
@@ -46,18 +51,16 @@ def check_for_new_push():
         with open(".last_update", "r") as file:
             stored_last_push = file.read().strip()
 
-        if last_push != stored_last_push:   
-            updat_it()         
-            print(f"Stored Last Push: {stored_last_push}")
-            with open(".last_update", "w") as file:
-                file.write(last_push)
+        if last_push != stored_last_push:
+            print ("old",stored_last_push,"\n new:",last_push)
+            updat_it(last_push)         
+
         else:
             print("Last Push and Stored Last Push are the same.")
     except FileNotFoundError:
-        # If the file doesn't exist, create it and write the last_push value
-        with open(".last_update", "w") as file:
-            file.write(last_push)
-            print(f"Stored Last Push: {last_push}")
+
+        updat_it(last_push)         
+
 
 if __name__ == "__main__":
     check_for_new_push()
