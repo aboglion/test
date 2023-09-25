@@ -13,12 +13,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Get directory
-      run: ls
+    # - name: Get directory
+    #   run: ls
 
-    # - name: Start containers
-    #   run: docker-compose -f "docker-compose.yml" up -d --build
+    - name: Start containers
+      run: docker-compose -f "docker-compose.yaml" up -d --build
 
-    # - name: Stop containers
-    #   if: always()
-    #   run: docker-compose -f "docker-compose.yml" down
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yaml" down
