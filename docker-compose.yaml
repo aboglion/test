@@ -11,7 +11,7 @@ services:
     #   dockerfile: Dockerfileflask_up
     restart: always
     environment:
-      TEST_ENV_PASSASSWORD: mypassword_B444LA
+      TEST_ENV_PASSASSWORD: mypasswornonond_B444LA
     ports:
       - "80:5000"
     networks:
