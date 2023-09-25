@@ -10,4 +10,8 @@ down-clear:
 
 build-app:
 	docker-compose build --no-cache
+
+to_git:
+	git add . && git commit -m "nd29" && git push
+
 	
