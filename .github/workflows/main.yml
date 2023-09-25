@@ -21,6 +21,9 @@ jobs:
     - name: Login_DockerHub
       run: echo "$password" | docker login docker.pkg.github.com -u "$username" --password-stdin
 
+    - name: testps
+      run : docker ps -a
+
     - name: build_container
       run: docker build -t test ./flask_app
 
